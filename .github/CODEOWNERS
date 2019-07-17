@@ -1,0 +1,20 @@
+# Fallback codeowners for all files that do not have an explicit rule.
+* @jaygambetta @aasfaw
+
+# Codeowners for individual folders
+terra/**/* @nonhermitian @attp @aasfaw @quantumjim @rraymondhp
+algorithms/* @attp @aasfaw @quantumjim @rraymondhp
+
+aer/* @chriseclectic @attp @aasfaw @quantumjim @rraymondhp
+ignis/* @dcmckayibm @yehuda-naveh @attp @aasfaw @quantumjim @rraymondhp
+
+aqua/**/* @chunfuchen @pistoia @aasfaw
+artificial_intelligence/**/* @chunfuchen @pistoia @aasfaw
+chemistry/**/* @chunfuchen @pistoia @aasfaw
+finance/**/* @chunfuchen @pistoia @aasfaw
+optimization/**/* @chunfuchen @pistoia @aasfaw
+
+arts/* @attp @aasfaw @quantumjim @rraymondhp
+awards/**/* @attp @aasfaw @quantumjim @rraymondhp @pistoia
+games/**/* @attp @aasfaw @quantumjim @rraymondhp
+hello_world/**/* @quantumjim @aasfaw
