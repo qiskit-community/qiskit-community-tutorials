@@ -14,6 +14,10 @@ In this folder we have a collection of great tutorials from our fantastic Qiskit
 
 * [Randomized Benchmarking](RB_overview.ipynb): Introduction to randomized benchmarking (RB), which is a scalable technique for measuring the average gate error. 
 
+* [Advanced Randomized Benchmarking Methods](RB_advanced.ipynb): Randomized benchmarking methods for estimating various types of noise errors: interleaved and purity RB.
+
+* [Quantum Volume](QV_overview.ipynb): Introduction to Quantum Volume (QV) which is a single-number metric that can be measured using a concrete protocol on near-term quantum computers of modest size.
+
 * [Repetition Code](repetition_code.ipynb): A guide to compiling repetition code circuits to run on real devices.
 
 ## Contributing
