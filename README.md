@@ -21,7 +21,7 @@ Learn about and how to program quantum circuits using Qiskit Terra.
 Learn about textbook quantum algorithms, like Deutsch-Jozsa, Grover, and Shor using Qiskit Terra. 
 
 ### 5 [Developing Quantum Applications with Qiskit Aqua](aqua/index.ipynb)
-Learn how to develop and the fundamentals of quantum applications using Qiskit Aqua
+Learn how to develop the fundamentals of quantum applications using Qiskit Aqua
 
 ### 6 Awards
 Learn from the great contributions to the [IBM Q Awards](https://qe-awards.mybluemix.net/)
