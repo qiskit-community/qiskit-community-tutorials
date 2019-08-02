@@ -1,5 +1,5 @@
 # Fallback codeowners for all files that do not have an explicit rule.
-* @jaygambetta @aasfaw
+* @aasfaw
 
 # Codeowners for individual folders
 terra/**/* @nonhermitian @attp @aasfaw @quantumjim @rraymondhp
