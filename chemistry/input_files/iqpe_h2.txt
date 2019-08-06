@@ -28,12 +28,11 @@
    two_qubit_reduction=True
    freeze_core=False
    orbital_reduction=[]
-   max_workers=4
 &end
 
 &algorithm
    name=IQPE
-   num_time_slices=200
+   num_time_slices=1
    expansion_mode=suzuki
    expansion_order=2
    num_iterations=9
