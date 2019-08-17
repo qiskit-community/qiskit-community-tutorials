@@ -1,4 +1,4 @@
-from qiskit import Aer, IBMQ
+from qiskit import Aer, IBMQ, QuantumRegister, ClassicalRegister, QuantumCircuit, execute
 import getpass, random, numpy, math
 
 def title_screen ():
@@ -19,17 +19,82 @@ def title_screen ():
     print("   ╚═════╝ ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝     ╚══════╝")
     print("")
     print("                 ___         ___                    _       _         ")
-    print("                | _ ) _  _  |   \  ___  __  ___  __| | ___ | |__ _  _ ")
-    print("                | _ \| || | | |) |/ -_)/ _|/ _ \/ _` |/ _ \| / /| || |")
-    print("                |___/ \_, | |___/ \___|\__|\___/\__,_|\___/|_\_\ \_,_|")
+    print(r'                | _ ) _  _  |   \  ___  __  ___  __| | ___ | |__ _  _ ')
+    print(r'                | _ \| || | | |) |/ -_)/ _|/ _ \/ _` |/ _ \| / /| || |')
+    print(r'                |___/ \_, | |___/ \___|\__|\___/\__,_|\___/|_\_\ \_,_|')
     print("                      |__/                                            ")
     print("")
     print("                       A game played on a real quantum computer!")
     print("")
     print("")
-    randPlace = input("> Press Enter to play...\n").upper()
+    input("> Press Enter to play...\n").upper()
 
-    
+
+def play_game():
+    # the game variable will be set to False once the game is over
+    game = True
+
+    # the variable bombs[X][Y] will hold the number of times position Y has been bombed by player X+1
+    bomb = [[0]*5 for _ in range(2)] # all values are initialized to zero
+
+    # set the number of samples used for statistics
+    shots = 1024
+
+    # the variable grid[player] will hold the results for the grid of each player
+    grid = [{}, {}]
+
+    # ask what kind of quantum device will be used (real or simulated)
+    device = ask_for_device()
+
+    # ask players where thir ships are
+    shipPos = ask_for_ships()
+
+    while (game):
+
+        # ask both players where they want to bomb, and update the list of bombings so far
+        bomb = ask_for_bombs(bomb)
+
+        # now we create and run the quantum programs that implement this on the grid for each player
+        qc = []
+        for player in range(2):
+
+            # now to set up the quantum program to simulate the grid for this player
+
+            # set up registers and program
+            q = QuantumRegister(5)
+            c = ClassicalRegister(5)
+            qc.append(QuantumCircuit(q, c))
+
+            # add the bombs (of the opposing player)
+            for position in range(5):
+                # add as many bombs as have been placed at this position
+                for _ in range(bomb[(player+1)%2][position]):
+                    # the effectiveness of the bomb
+                    # (which means the quantum operation we apply)
+                    # depends on which ship it is
+                    for ship in [0,1,2]:
+                        if (position == shipPos[player][ship]):
+                            frac = 1/(ship+1)
+                            # add this fraction of a NOT to the QASM
+                            qc[player].u3(frac * math.pi, 0.0, 0.0, q[position])
+
+            # Finally, measure them
+            for position in range(5):
+                qc[player].measure(q[position], c[position])
+
+        # compile and run the quantum program
+        job = execute(qc, backend=device, shots=shots)
+        if not device.configuration().to_dict()['simulator']:
+            print("\nWe've now submitted the job to the quantum computer to see what happens to the ships of each player\n(it might take a while).\n")
+        else:
+            print("\nWe've now submitted the job to the simulator to see what happens to the ships of each player.\n")
+        # and extract data
+        for player in range(2):
+            grid[player] = job.result().get_counts(qc[player])
+        print(grid)
+
+        game = display_grid(grid, shipPos, shots)
+
 def ask_for_device ():
     
     d = input("Do you want to play on the real device? (y/n)\n").upper()
@@ -155,13 +220,13 @@ def display_grid ( grid, shipPos, shots ):
                     
         print("Here is the percentage damage for ships that have been bombed.\n")
         print(display[ 4 ] + "    " + display[ 0 ])
-        print(" |\     /|")
-        print(" | \   / |")
-        print(" |  \ /  |")
+        print(r' |\     /|')
+        print(r' | \   / |')
+        print(r' |  \ /  |')
         print(" |  " + display[ 2 ] + " |")
-        print(" |  / \  |")
-        print(" | /   \ |")
-        print(" |/     \|")
+        print(r' |  / \  |')
+        print(r' | /   \ |')
+        print(r' |/     \|')
         print(display[ 3 ] + "    " + display[ 1 ])
         print("\n")
         print("Ships with 95% damage or more have been destroyed\n")
