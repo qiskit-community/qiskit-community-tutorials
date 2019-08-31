@@ -4,7 +4,7 @@
 
 Welcome to the [Qiskit](https://www.qiskit.org/) community tutorials!
 
-In this repository, we've put together a collection of awesome community-contributed Jupyter notebooks that leverage the features of Qiskit in education and applications.
+In this repository, we've put together a collection of awesome community-contributed Jupyter notebooks that leverage the features of Qiskit in education and applications. Feel free to navigate this repository, to [Fork this repo](https://github.com/qiskit/qiskit-community-tutorials/fork), [Clone to your Desktop](x-github-client://openRepo/https://github.com/Qiskit/qiskit-community-tutorials), or to open the [Binder image](https://mybinder.org/v2/gh/omarcostahamido/qiskit-community-tutorials/master?filepath=./index.ipynb).
 
 ## Contents
 
