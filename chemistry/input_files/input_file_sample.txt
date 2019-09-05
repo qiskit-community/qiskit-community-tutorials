@@ -70,7 +70,6 @@ driver installation requirements this will use the HDF5 file driver.
 #
 &algorithm
    name=VQE
-   operator_mode=matrix
 &end
 
 # Below are specific configuration sections that depend on choice of ALGORITHM

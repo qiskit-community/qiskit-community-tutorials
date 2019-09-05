@@ -22,7 +22,6 @@ Hamiltonian, i.e. the ground state energy.
 
 &algorithm
    name=VQE
-   operator_mode=paulis
 &end
 
 &initial_state

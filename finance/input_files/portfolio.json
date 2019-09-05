@@ -4,8 +4,7 @@
         "random_seed": 50
     },
     "algorithm": {
-        "name": "VQE",
-        "operator_mode": "matrix"
+        "name": "VQE"
     },
     "optimizer": {
         "name": "COBYLA",

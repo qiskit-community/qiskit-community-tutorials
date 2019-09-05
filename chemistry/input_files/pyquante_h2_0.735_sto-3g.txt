@@ -21,7 +21,6 @@ PyQuante H2 experiment
 
 &algorithm
    name=VQE
-   operator_mode=matrix
 &end
 
 &optimizer

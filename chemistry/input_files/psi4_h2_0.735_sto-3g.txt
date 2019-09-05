@@ -26,7 +26,6 @@ set {
 
 &algorithm
    name=VQE
-   operator_mode=matrix
 &end
 
 &optimizer

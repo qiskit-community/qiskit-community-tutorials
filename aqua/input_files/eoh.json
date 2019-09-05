@@ -4,8 +4,7 @@
         "expansion_mode": "trotter",
         "expansion_order": 1,
         "name": "EOH",
-        "num_time_slices": 1,
-        "operator_mode": "paulis"
+        "num_time_slices": 1
     },
     "backend": {
         "provider": "qiskit.BasicAer",

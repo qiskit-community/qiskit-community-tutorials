@@ -27,7 +27,6 @@ H   0.0  0.0  0.8
 
 &algorithm
    name=VQE
-   operator_mode=matrix
 &end
 
 &optimizer

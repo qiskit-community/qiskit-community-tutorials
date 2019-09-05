@@ -23,7 +23,6 @@ PySCF LiH experiment
 
 &algorithm
    name=VQE
-   operator_mode=matrix
 &end
 
 &optimizer

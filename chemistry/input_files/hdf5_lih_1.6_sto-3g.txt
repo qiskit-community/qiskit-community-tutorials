@@ -19,7 +19,6 @@ HDF5 LiH experiment
 
 &algorithm
    name=VQE
-   operator_mode=matrix
 &end
 
 &initial_state
