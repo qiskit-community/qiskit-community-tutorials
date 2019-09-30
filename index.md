@@ -111,5 +111,4 @@ The following lists show notebooks in the Qiskit tutorials that are relevant for
 * [quantum slot machine](community/games/quantum_slot_machine.ipynb)
 
 ### Superposition
-* [quantum tic tac toe](community/games/quantum_tic_tac_toe.ipynb)
-
+* [quantum tic tac toe](https://github.com/Qiskit/qiskit-community-tutorials/blob/master/games/quantum_tic_tac_toe.ipynb)
