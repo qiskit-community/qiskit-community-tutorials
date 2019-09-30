@@ -96,19 +96,19 @@ The following lists show notebooks in the Qiskit tutorials that are relevant for
 * [random terrain generation](community/creative/random_terrain_generation.ipynb)
 
 ### Music
-* [pqcm win basic superposition](community/creative/pqcm_win_basic_superposition.ipynb)
+* [pqcm win basic superposition](creative/pqcm_win_basic_superposition.ipynb)
 
 ### NOT gates
-* [battleships with partial NOT gates](community/games/battleships_with_partial_NOT_gates.ipynb)
+* [battleships with partial NOT gates](games/battleships_with_partial_NOT_gates.ipynb)
 
 ### Procedural generation
-* [random terrain generation](community/creative/random_terrain_generation.ipynb)
+* [random terrain generation](creative/random_terrain_generation.ipynb)
 
 ### Quantum error correction
-* [repetition code](community/ignis/repetition_code.ipynb)
+* [repetition code](ignis/repetition_code.ipynb)
 
 ### Random number generation
-* [quantum slot machine](community/games/quantum_slot_machine.ipynb)
+* [quantum slot machine](games/quantum_slot_machine.ipynb)
 
 ### Superposition
 * [quantum tic tac toe](games/quantum_tic_tac_toe.ipynb)
