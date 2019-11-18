@@ -15,7 +15,10 @@
 # limitations under the License.
 # =============================================================================
 
-import qiskit.chemistry
+from qiskit.aqua.algorithms import ExactEigensolver
+from qiskit.chemistry.drivers import PySCFDriver, UnitsType
+from qiskit.chemistry.core import Hamiltonian
+
 
 # An example of using a loop to vary inter-atomic distance. A dictionary is
 # created outside the loop, but inside the loop the 'atom' value is updated
@@ -26,15 +29,15 @@ import qiskit.chemistry
 # substituted by format(). Note the negative sign preceding the first format
 # substitution point i.e. the {} brackets
 #
-input_dict = {
-    'driver': {'name': 'PYSCF'},
-    'PYSCF': {'atom': None, 'unit': 'Angstrom', 'charge': 0, 'spin': 0, 'basis': 'sto3g'},
-    'algorithm': {'name': 'ExactEigensolver'},
-}
+
 molecule = 'H .0 .0 -{0}; H .0 .0 {0}'
 for i in range(21):
     d = (0.5 + i * 0.5 / 20) / 2
-    input_dict['PYSCF']['atom'] = molecule.format(d)
-    solver = qiskit.chemistry.QiskitChemistry()
-    result = solver.run(input_dict)
+    driver = PySCFDriver(molecule.format(d), unit=UnitsType.ANGSTROM,
+                         charge=0, spin=0, basis='sto3g')
+    qmolecule = driver.run()
+    operator = Hamiltonian()
+    qubit_op, aux_ops = operator.run(qmolecule)
+    result = ExactEigensolver(qubit_op).run()
+    _, result = operator.process_algorithm_result(result)
     print('{:.4f} : {}'.format(d * 2, result['energy']))
