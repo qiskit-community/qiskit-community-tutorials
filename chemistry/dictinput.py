@@ -20,8 +20,8 @@ from qiskit.chemistry.drivers import PySCFDriver, UnitsType
 from qiskit.chemistry.core import Hamiltonian
 
 
-# An example of using a loop to vary inter-atomic distance. A dictionary is
-# created outside the loop, but inside the loop the 'atom' value is updated
+# An example of using a loop to vary inter-atomic distance.
+# Inside the loop the 'atom' value is updated
 # with a new molecular configuration. The molecule is H2 and its inter-atomic distance
 # i.e the distance between the two atoms, is altered from 0.5 to 1.0. Each atom is
 # specified by x, y, z coords and the atoms are set on the z-axis, equidistant from
