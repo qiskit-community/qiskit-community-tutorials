@@ -1,4 +1,4 @@
-# Qiskit Aqua Machine Learning Tutorials, Samples and Input Files
+# Qiskit Aqua Machine Learning Tutorials and Samples
 
 Qiskit Aqua Machine Learning is a set of tools, algorithms and software for use with quantum computers to 
 carry out research and investigate how to take advantage of quantum computing power to solve machine learning
