@@ -22,7 +22,7 @@ built. Tutorials, sample code and sample input files may be found here for:
 
 * [Qiskit Chemistry](../chemistry)
 * [Qiskit Optimization](../optimization)
-* [Qiskit Artificial Intelligence](../artificial_intelligence)
+* [Qiskit Machine Learning](../machine_learning)
 * [Qiskit Finance](../finance)
 
 More information may be found the [main index notebook](index.ipynb).
