@@ -8,11 +8,11 @@ algorithms/* @attp @aasfaw @quantumjim @rraymondhp
 aer/* @chriseclectic @attp @aasfaw @quantumjim @rraymondhp
 ignis/* @dcmckayibm @yehuda-naveh @attp @aasfaw @quantumjim @rraymondhp
 
-aqua/**/* @chunfuchen @pistoia @aasfaw
-machine_learning/**/* @chunfuchen @pistoia @aasfaw
-chemistry/**/* @chunfuchen @pistoia @aasfaw
-finance/**/* @chunfuchen @pistoia @aasfaw
-optimization/**/* @chunfuchen @pistoia @aasfaw
+aqua/**/* @woodsp-ibm @dongreenberg @aasfaw
+machine_learning/**/* @woodsp-ibm @dongreenberg @aasfaw
+chemistry/**/* @woodsp-ibm @pbark @aasfaw
+finance/**/* @woodsp-ibm @stefan-woerner @aasfaw
+optimization/**/* @woodsp-ibm @stefan-woerner @aasfaw
 
 arts/* @attp @aasfaw @quantumjim @rraymondhp
 awards/**/* @attp @aasfaw @quantumjim @rraymondhp @pistoia
