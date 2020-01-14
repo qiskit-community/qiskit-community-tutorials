@@ -1,15 +1,17 @@
+import threading
+import os
 import json
 from urllib.parse import urlencode
 from urllib.request import urlopen
-from qiskit import *
-from qiskit.tools.monitor import job_monitor
-import ipywidgets as widgets
 from IPython.display import display
-import threading
-import os
+import ipywidgets as widgets
+from qiskit import IBMQ, execute, QuantumCircuit, QuantumRegister, ClassicalRegister, BasicAer
+from qiskit.tools.monitor import job_monitor
+
 script_dir = os.path.dirname(__file__)
 
-IBMQ.load_accounts(hub=None)
+MY_PROVIDER = IBMQ.load_account()
+
 
 __all__ = ['quantum_slot_machine']
 
@@ -101,7 +103,7 @@ def compute_payout(ints, qslot):
     elif all([x == 0 for x in ints]):
         value = 80
     # two bells
-    elif sum([x == 0 for x in ints])== 2:
+    elif sum([x == 0 for x in ints]) == 2:
         value = 5
     # two bells
     elif sum([x == 0 for x in ints]) == 1:
@@ -110,7 +112,7 @@ def compute_payout(ints, qslot):
         value = 0
     if value:
         update_credits(value, qslot)
-    
+
     # if no credits left
     if qslot.children[0]._credits <= 0:
         qslot.children[1].children[1].value = front_str + \
@@ -131,11 +133,19 @@ def pull_slot(b):
     if alive:
         b.disabled = False
 
+def choose_backend():
+    from qiskit.providers.ibmq import least_busy
+    large_enough_devices = MY_PROVIDER.backends(
+        filters=lambda x: x.configuration().n_qubits >= 3
+        and not x.configuration().simulator)
+    return least_busy(large_enough_devices)
+
 # generate new ibm q values
 def get_ibmq_ints(qslot):
     qslot.children[1].children[0].options = ['qasm_simulator', 'ANU QRNG']
     qslot.children[1].children[0].value = 'qasm_simulator'
-    back = IBMQ.get_backend('ibmq_5_tenerife')
+#    back = MY_PROVIDER.get_backend('ibmq_essex')
+    back = choose_backend()
     q = QuantumRegister(3, name='q')
     c = ClassicalRegister(3, name='c')
     qc = QuantumCircuit(q, c)
@@ -310,6 +320,5 @@ out = widgets.Output(layout=widgets.Layout(width='33%', padding='10px'))
 
 opts = widgets.HBox(children=[solver, payout, out],
                     layout=widgets.Layout(width='100%',
-                                         justify_content='center',
-                                         border='2px solid black'))
-
+                                          justify_content='center',
+                                          border='2px solid black'))

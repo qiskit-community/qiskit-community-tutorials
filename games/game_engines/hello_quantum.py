@@ -1,4 +1,3 @@
-from qiskit import IBMQ
 from qiskit import BasicAer as Aer
 from qiskit import ClassicalRegister, QuantumRegister, QuantumCircuit
 from qiskit import execute
@@ -8,12 +7,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, Rectangle
 import copy
 from ipywidgets import widgets  
-from IPython.display import display, clear_output
-
-try:
-    IBMQ.load_accounts()
-except:
-    pass 
+from IPython.display import display, clear_output 
 
 class run_game():
     # Implements a puzzle, which is defined by the given inputs.
@@ -43,7 +37,9 @@ class run_game():
         shots=1024
             Number of shots used to to calculate expectation values.
         mode='circle'
-            Either the standard 'Hello Quantum' visualization can be used (with mode='circle') or the alternative line based one (mode='line').
+            Either the standard 'Hello Quantum' visualization can be used (with mode='circle'), or the extended one (mode='y') or the alternative line based one (mode='line').
+        y_boxes = False
+            Whether to show expectation values involving y.
         verbose=False     
         """
 
@@ -79,6 +75,9 @@ class run_game():
                 for gate in required_gates[qubit]:
                     success = success and (required_gates[qubit][gate]==0)
             return success
+        
+        def show_circuit():
+            gates = get_total_gate_list
 
         def get_command(gate,qubit):
             # For a given gate and qubit, return the string describing the corresoinding Qiskit string.
@@ -96,6 +95,9 @@ class run_game():
             elif gate in ['ry(pi/4)','ry(-pi/4)']:
                 real_command  = 'grid.qc.ry('+'-'*(gate=='ry(-pi/4)')+'np.pi/4,grid.qr['+qubit+'])'
                 clean_command = 'qc.ry('+'-'*(gate=='ry(-pi/4)')+'np.pi/4,'+qubit_name+')'
+            elif gate in ['rx(pi/4)','rx(-pi/4)']:
+                real_command  = 'grid.qc.rx('+'-'*(gate=='rx(-pi/4)')+'np.pi/4,grid.qr['+qubit+'])'
+                clean_command = 'qc.rx('+'-'*(gate=='rx(-pi/4)')+'np.pi/4,'+qubit_name+')'
             elif gate in ['cz','cx','swap']: 
                 real_command  = 'grid.qc.'+gate+'(grid.qr['+'0'*(qubit=='1')+'1'*(qubit=='0')+'],grid.qr['+qubit+'])'
                 clean_command = 'qc.'+gate+'('+other_name+','+qubit_name+')'
@@ -105,7 +107,10 @@ class run_game():
         bloch = [None]
 
         # set up initial state and figure
-        grid = pauli_grid(backend=backend,shots=shots,mode=mode)
+        if mode=='y':
+            grid = pauli_grid(backend=backend,shots=shots,mode='circle',y_boxes=True)
+        else:
+            grid = pauli_grid(backend=backend,shots=shots,mode=mode)
         for gate in initialize:
             eval( get_command(gate[0],gate[1])[0] )
 
@@ -147,8 +152,8 @@ class run_game():
 
         boxes = widgets.VBox([gate,qubit,action])
         display(boxes)
-        if vi[1]:
-            print('\nYour quantum program so far\n')
+        if qubit_names=={'0':'q[0]', '1':'q[1]'}:
+            print('\nYour quantum program so far:\n\n    q = QuantumRegister(2)\n    b = ClassicalRegister(2)\n    qc = QuantumCircuit(q,b)\n')
         self.program = []
 
         def given_gate(a):
@@ -202,8 +207,8 @@ class run_game():
                         else:
                             command = get_command(q_gate,q01)
                             eval(command[0])
-                            if vi[1]:
-                                print(command[1])
+                            if qubit_names in [{'0':'q[0]', '1':'q[1]'},{'0':'A', '1':'B'}]:
+                                print('    ' + command[1])
                             self.program.append( command[1] )
                         if required_gates[q01][gate.value]>0:
                             required_gates[q01][gate.value] -= 1
@@ -225,24 +230,41 @@ class run_game():
         qubit.observe(given_qubit)
         action.observe(given_action)
         
+def get_circuit(puzzle):
+    
+    q = QuantumRegister(2,'q')
+    b = ClassicalRegister(2,'b')
+    qc = QuantumCircuit(q,b)
+    
+    for line in puzzle.program:
+        eval(line)
         
+    return qc
+
 class pauli_grid():
     # Allows a quantum circuit to be created, modified and implemented, and visualizes the output in the style of 'Hello Quantum'.
 
-    def __init__(self,backend=Aer.get_backend('qasm_simulator'),shots=1024,mode='circle'):
+    def __init__(self,backend=Aer.get_backend('qasm_simulator'),shots=1024,mode='circle',y_boxes=False):
         """
         backend=Aer.get_backend('qasm_simulator')
             Backend to be used by Qiskit to calculate expectation values (defaults to local simulator).
         shots=1024
             Number of shots used to to calculate expectation values.
         mode='circle'
-            Either the standard 'Hello Quantum' visualization can be used (with mode='circle') or the alternative line based one (mode='line').    
+            Either the standard 'Hello Quantum' visualization can be used (with mode='circle') or the alternative line based one (mode='line').
+        y_boxes=True
+            Whether to display full grid that includes Y expectation values.
         """
         
         self.backend = backend
         self.shots = shots
-                
-        self.box = {'ZI':(-1, 2),'XI':(-2, 3),'IZ':( 1, 2),'IX':( 2, 3),'ZZ':( 0, 3),'ZX':( 1, 4),'XZ':(-1, 4),'XX':( 0, 5)}
+        
+        self.y_boxes = y_boxes
+        if self.y_boxes:
+            self.box = {'ZI':(-1, 2),'XI':(-3, 4),'IZ':( 1, 2),'IX':( 3, 4),'ZZ':( 0, 3),'ZX':( 2, 5),'XZ':(-2, 5),'XX':( 0, 7),
+                        'YY':(0,5), 'YI':(-2,3), 'IY':(2,3), 'YZ':(-1,4), 'ZY':(1,4), 'YX':(1,6), 'XY':(-1,6) }
+        else:
+            self.box = {'ZI':(-1, 2),'XI':(-2, 3),'IZ':( 1, 2),'IX':( 2, 3),'ZZ':( 0, 3),'ZX':( 1, 4),'XZ':(-1, 4),'XX':( 0, 5)}
         
         self.rho = {}
         for pauli in self.box:
@@ -278,14 +300,23 @@ class pauli_grid():
                          
     
     def get_rho(self):
-        # Runs the circuit specified by self.qc and determines the expectation values for 'ZI', 'IZ', 'ZZ', 'XI', 'IX', 'XX', 'ZX' and 'XZ'.
+        # Runs the circuit specified by self.qc and determines the expectation values for 'ZI', 'IZ', 'ZZ', 'XI', 'IX', 'XX', 'ZX' and 'XZ' (and the ones with Ys too if needed).
         
-        bases = ['ZZ','ZX','XZ','XX']
+        if self.y_boxes:
+            corr = ['ZZ','ZX','XZ','XX','YY','YX','YZ','XY','ZY']
+            ps = ['X','Y','Z']
+        else:
+            corr = ['ZZ','ZX','XZ','XX']
+            ps = ['X','Z']
+        
         results = {}
-        for basis in bases:
+        for basis in corr:
             temp_qc = copy.deepcopy(self.qc)
             for j in range(2):
                 if basis[j]=='X':
+                    temp_qc.h(self.qr[j])
+                elif basis[j]=='Y':
+                    temp_qc.sdg(self.qr[j])
                     temp_qc.h(self.qr[j])
             temp_qc.barrier(self.qr)
             temp_qc.measure(self.qr,self.cr)
@@ -293,21 +324,24 @@ class pauli_grid():
             results[basis] = job.result().get_counts()
             for string in results[basis]:
                 results[basis][string] = results[basis][string]/self.shots
-          
+
         prob = {}
         # prob of expectation value -1 for single qubit observables
         for j in range(2):
-            for p in ['X','Z']:
+            
+            for p in ps:
                 pauli = {}
-                for pp in 'IXZ':
+                for pp in ['I']+ps:
                     pauli[pp] = (j==1)*pp + p + (j==0)*pp
                 prob[pauli['I']] = 0
-                for basis in [pauli['X'],pauli['Z']]:
+                for ppp in ps:
+                    basis = pauli[ppp]
                     for string in results[basis]:
                         if string[(j+1)%2]=='1':
-                            prob[pauli['I']] += results[basis][string]/2
+                            prob[pauli['I']] += results[basis][string]/(2+self.y_boxes)
+        
         # prob of expectation value -1 for two qubit observables
-        for basis in ['ZZ','ZX','XZ','XX']:
+        for basis in corr:
             prob[basis] = 0
             for string in results[basis]:
                 if string[0]!=string[1]:
@@ -315,14 +349,13 @@ class pauli_grid():
 
         for pauli in prob:
             self.rho[pauli] = 1-2*prob[pauli]
-
     
     def update_grid(self,rho=None,labels=False,bloch=None,hidden=[],qubit=True,corr=True,message=""):
         """
         rho = None
             Dictionary of expectation values for 'ZI', 'IZ', 'ZZ', 'XI', 'IX', 'XX', 'ZX' and 'XZ'. If supplied, this will be visualized instead of the results of running self.qc.
-        labels = None
-            Dictionary of strings for 'ZI', 'IZ', 'ZZ', 'XI', 'IX', 'XX', 'ZX' and 'XZ' that are printed in the corresponding boxes.
+        labels = False
+            Determines whether basis labels are printed in the corresponding boxes.
         bloch = None
             If a qubit name is supplied, and if mode='line', Bloch circles are displayed for this qubit
         hidden = []
@@ -387,7 +420,7 @@ class pauli_grid():
                 self.lines[pauli]['w'] = plt.plot( [a[0],b[0]], [a[1],b[1]], color=(1.0,1.0,1.0), lw=lw )
                 self.lines[pauli]['b'] = plt.plot( [b[0],c[0]], [b[1],c[1]], color=(0.0,0.0,0.0), lw=lw )
                 return coord
-                         
+        
         l = 0.9 # line length
         r = 0.6 # circle radius
         L = 0.98*np.sqrt(2) # box height and width
@@ -442,11 +475,14 @@ class pauli_grid():
         self.bottom.set_text(message)
         
         if labels:
-            for pauli in box:
-                plt.text(self.box[pauli][0]-0.05,self.box[pauli][1]-0.85, pauli)
+            for pauli in self.box:
+                plt.text(self.box[pauli][0]-0.18,self.box[pauli][1]-0.85, pauli)
         
-        self.ax.set_xlim([-3,3])
-        self.ax.set_ylim([0,6])
+        if self.y_boxes:
+            self.ax.set_xlim([-4,4])
+            self.ax.set_ylim([0,8])
+        else:
+            self.ax.set_xlim([-3,3])
+            self.ax.set_ylim([0,6])
         
         self.fig.canvas.draw()
-
