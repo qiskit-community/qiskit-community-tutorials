@@ -40,7 +40,7 @@ def get_slot_values(backend, qslot):
         result = job.result()
         counts = list(result.get_counts().keys())[0]
         return int(counts[0:3], 2), int(counts[3:6], 2), int(counts[6:9], 2)
-    elif backend == 'ibmq_5_tenerife':
+    elif backend == 'ibmqx2':
         int1 = qslot.children[0]._stored_ints.pop(0)
         int2 = qslot.children[0]._stored_ints.pop(0)
         int3 = qslot.children[0]._stored_ints.pop(0)
@@ -159,7 +159,7 @@ def get_ibmq_ints(qslot):
     qslot.children[0]._stored_ints = [
         int(kk, 16) for kk in job.result().results[0].data.memory]
 
-    qslot.children[1].children[0].options = ['qasm_simulator', 'ibmq_5_tenerife', 'ANU QRNG']
+    qslot.children[1].children[0].options = ['qasm_simulator', 'ibmqx2', 'ANU QRNG']
 
 
 #top
@@ -299,7 +299,7 @@ for kk, img in enumerate(imgs):
 slot._credits = 20
 
 solver = widgets.Dropdown(
-    options=['qasm_simulator', 'ibmq_5_tenerife', 'ANU QRNG'],
+    options=['qasm_simulator', 'ibmqx2', 'ANU QRNG'],
     value='qasm_simulator',
     description='',
     disabled=False,
