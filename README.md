@@ -28,6 +28,9 @@ Learn from the great contributions to the [IBM Q Awards](https://qe-awards.myblu
 * [Teach Me Qiskit 2018](awards/teach_me_qiskit_2018/index.ipynb)
 * [Teach Me Quantum 2018](awards/teach_me_quantum_2018/index.ipynb)
 
+### 7 [Quantum Cryptography with Qiskit](Cryptography/)
+If you are interested in the applications of qiskit to quantum cryptography this is your section.
+
 ## Contribution Guidelines
 
 If you'd like to contribute to `Qiskit Community Tutorials`, please take a look at our
