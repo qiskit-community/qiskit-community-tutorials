@@ -1,5 +1,7 @@
 # Quantum Cryptography
-## QRandom --> Generates random numbers.
-The random number is directly generated from a Hadamard gate using Qiskit Terra. It is similar to rolling an `n`-faced dice, where `n` is the number of qubits. It is the worst way to generate random numbers using a quantum computer but the sequence developed is truly random. 
+Cryptography is an essential part of our modern lives and it was a huge starter for people to be interested in quantum computing. That it's why we want to contribute to the community with these tutorials. In these folders you'll find protocols and other applications to quantum cryotography. All of these run in Jupyter notebooks with the use of different libraries including qiskit.
 
-For a more detailed example of generating random variates from various distributions using Qiskit aqua, take a look at [this tutorial](https://github.com/Qiskit/qiskit-tutorials/blob/master/qiskit/aqua/generating_random_variates.ipynb).
+## Contents
+
+* [Oblivous transfer](Hello_Qiskit.ipynb) - Protocol in which Alice transmits two messages but Bob is only able to read one of them depending of his choice.
+* [Random number generator](battleships_with_partial_NOT_gates.ipynb) - Random number generator from Hadamard gates.
