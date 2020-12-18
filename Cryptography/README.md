@@ -3,5 +3,5 @@ Cryptography is an essential part of our modern lives and it has always been an 
 
 ## Contents
 
-* [Protocols](Protocols) - Protocols that used the power of quantum cryptography.
+* [Protocols](Protocols) - Protocols that use the power of quantum cryptography.
 * [Random number generator](Random%20Number%20Generator) - Random number generator from Hadamard gates.
