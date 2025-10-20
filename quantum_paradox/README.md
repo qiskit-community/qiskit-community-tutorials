@@ -46,7 +46,7 @@ pip install qiskit qiskit-aer matplotlib numpy
 Launch Jupyter and open:
 
 ```
-quantum_pigeonhole_paradox_qiskit_tutorial.ipynb
+quantum_pigeonhole_paradox.ipynb
 ```
 
 Execute all cells sequentially. Inline circuit diagrams will appear automatically.
