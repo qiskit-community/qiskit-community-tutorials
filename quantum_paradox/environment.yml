@@ -1,0 +1,11 @@
+name: pigeonhole
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - qiskit=2.*
+  - qiskit-aer
+  - matplotlib
+  - numpy
+  - jupyter
+  - notebook
