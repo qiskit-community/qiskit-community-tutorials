@@ -17,6 +17,8 @@ This is exactly what we'd like to replicate in this folder. Here you'll find bas
 
 * [Quantum Awesomeness](quantum_awesomeness.ipynb) - Puzzles that aim to give hands-on experience of a quantum device's most important features: number of qubits, connectivity and noise.
 
+* [3x3 Sudoku — Grover's Algorithm](3x3_sudoku_grover.ipynb) - Solves a 3×3 Latin-square Sudoku using Grover's algorithm on a 22-qubit Qiskit Aer circuit, demonstrating oracle construction, phase kickback, and amplitude amplification.
+
 You can also find the following game related content in the 'creative' folder.
 
 * [Random Terrain Generation](../creative/random_terrain_generation.ipynb) - A simple example of using quantum computers for the kind of procedural generation often used in games.
